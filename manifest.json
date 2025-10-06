@@ -1,0 +1,16 @@
+{
+  "short_name": "محاسبه گر",
+  "name": "محاسبه گر پروژه ساختمانی",
+  "description": "یک وب اپلیکیشن برای محاسبه پارامترهای مختلف پروژه‌های ساختمانی بر اساس ورودی‌های کاربر.",
+  "icons": [
+    {
+      "src": "/vite.svg",
+      "type": "image/svg+xml",
+      "sizes": "192x192 512x512"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#f59e0b",
+  "background_color": "#0f172a"
+}
