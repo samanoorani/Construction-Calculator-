@@ -433,87 +433,8 @@ const ResultsDashboard: React.FC<{ results: ResultsState; definitions: typeof RE
   );
 };
 
-const LoginScreen: React.FC<{ onLogin: (password: string) => void; error: string | null; }> = ({ onLogin, error }) => {
-  const [password, setPassword] = React.useState('');
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onLogin(password);
-  };
-  return (
-    <div className="min-h-screen bg-slate-900 text-gray-200 flex flex-col justify-center items-center p-4">
-      <div className="w-full max-w-sm mx-auto">
-        <div className="text-center mb-8">
-            <div className="inline-block border border-slate-700 px-4 py-1.5 rounded-full mb-4">
-                <p className="text-xs text-amber-500 tracking-[0.2em] uppercase font-medium">ARA GROUP CONSTRUCTION</p>
-            </div>
-            <h1 className="text-3xl sm:text-4xl font-light text-amber-400 tracking-widest">محاسبه گر پروژه ساختمانی</h1>
-        </div>
-        <div className="bg-slate-800/50 rounded-xl shadow-md border border-slate-700/50 p-6 sm:p-8">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label htmlFor="password" className="block mb-2 text-sm font-normal text-slate-400">رمز عبور</label>
-              <input
-                type="password" id="password" name="password" value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-slate-900 border border-slate-700 rounded-md py-2 px-3 text-slate-100 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 placeholder:text-slate-500"
-                placeholder="••••••••" required autoFocus
-              />
-            </div>
-            {error && (<p className="text-sm text-red-400 text-center">{error}</p>)}
-            <button type="submit" className="w-full bg-amber-600 hover:bg-amber-700 text-slate-900 font-bold py-3 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-amber-500">
-              ورود
-            </button>
-          </form>
-        </div>
-        <p className="text-center text-xs text-slate-500 mt-6">برای دسترسی به اپلیکیشن، لطفاً رمز عبور را وارد کنید.</p>
-      </div>
-    </div>
-  );
-};
-
-const LoadingAnimation: React.FC = () => {
-  return (
-    <div className="min-h-screen bg-slate-900 flex flex-col justify-center items-center text-center p-4 overflow-hidden">
-      <div className="w-48 h-48">
-        <svg viewBox="0 0 100 100" className="blueprint-svg">
-          <path d="M 15 85 L 85 85 L 85 40" strokeWidth="1" />
-          <path d="M 10 45 L 50 10 L 90 45" strokeWidth="1" />
-          <path d="M 15 85 L 15 40 L 85 40" strokeWidth="1" />
-          <path d="M 42 85 L 42 65 L 58 65 L 58 85" strokeWidth="1" />
-          <path d="M 22 50 L 38 50 L 38 60 L 22 60 L 22 50" strokeWidth="1" />
-          <path d="M 30 50 L 30 60" strokeWidth="0.5" />
-          <path d="M 22 55 L 38 55" strokeWidth="0.5" />
-        </svg>
-      </div>
-      <div className="animate-fade-in-text">
-        <h2 className="text-xl text-amber-400 mt-8 tracking-widest font-light">درحال بارگذاری پروژه...</h2>
-        <p className="text-sm text-slate-500 mt-4 tracking-[0.2em] uppercase">ARA GROUP CONSTRUCTION</p>
-      </div>
-      <style>{`
-        .blueprint-svg { width: 100%; height: 100%; overflow: visible; }
-        .blueprint-svg path { fill: none; stroke: #fbbf24; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 500; stroke-dashoffset: 500; animation: draw 2s ease-in-out forwards; }
-        .blueprint-svg path:nth-child(1) { animation-delay: 0s; } .blueprint-svg path:nth-child(2) { animation-delay: 0.2s; } .blueprint-svg path:nth-child(3) { animation-delay: 0.4s; } .blueprint-svg path:nth-child(4) { animation-delay: 0.8s; } .blueprint-svg path:nth-child(5) { animation-delay: 1.2s; } .blueprint-svg path:nth-child(6) { animation-delay: 1.4s; } .blueprint-svg path:nth-child(7) { animation-delay: 1.4s; }
-        @keyframes draw { to { stroke-dashoffset: 0; } }
-        .animate-fade-in-text { animation: fade-in 1.5s 1s ease-in forwards; opacity: 0; }
-        @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
-      `}</style>
-    </div>
-  );
-};
-
-
 // --- App Component ---
 const App: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [loginError, setLoginError] = React.useState<string | null>(null);
-
-  React.useEffect(() => {
-    if (sessionStorage.getItem('is-authenticated') === 'true') {
-      setIsAuthenticated(true);
-    }
-  }, []);
-
   const [inputs, setInputs] = React.useState<InputsState>({
     A1: 200, A2: 10, A3: true, A4: true, A6: 5, A7: 60, A8: 60, A9: 2, A10: 70,
     A11: 2, A12: 1, A15: 12, A16: 50000000, A17: 100000000, A18: 20000000,
@@ -595,21 +516,6 @@ const App: React.FC = () => {
 
     setResults(sanitizedResults);
   }, [inputs]);
-
-  const handleLogin = (password: string) => {
-    if (password === '13681202') {
-      sessionStorage.setItem('is-authenticated', 'true');
-      setIsAuthenticated(true);
-      setIsLoading(true);
-      setLoginError(null);
-      setTimeout(() => setIsLoading(false), 2800);
-    } else {
-      setLoginError('رمز عبور اشتباه است. لطفاً دوباره تلاش کنید.');
-    }
-  };
-
-  if (!isAuthenticated) return <LoginScreen onLogin={handleLogin} error={loginError} />;
-  if (isLoading) return <LoadingAnimation />;
 
   return (
     <div className="min-h-screen bg-slate-900 text-gray-200 flex flex-col items-center p-4 sm:p-6">
