@@ -1,12 +1,11 @@
-// FIX: Added imports for React and ReactDOM.
-// Although they are loaded globally via script tags, the TypeScript compiler
-// needs these imports for type checking and correct JSX transpilation.
-import * as React from 'react';
-import * as ReactDOM from 'react-dom/client';
-
 // --- All imports for external libraries are removed. ---
 // They are now loaded globally via <script> tags in index.html.
 // We can still use React, ReactDOM, and QRCode because they are on the window object.
+
+// FIX: Add imports for React and ReactDOM to provide type definitions for the compiler.
+// The build system is expected to handle these as external dependencies.
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 
 // --- From types.ts ---
 interface InputsState {
