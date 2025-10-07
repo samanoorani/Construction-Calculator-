@@ -1,6 +1,6 @@
-// FIX: Add React and ReactDOM imports to resolve TypeScript errors.
-// These are needed for JSX compilation and for type definitions.
-// Although the libraries are loaded globally as per the comment below, the TS compiler needs to know about them.
+// FIX: Added imports for React and ReactDOM.
+// Although they are loaded globally via script tags, the TypeScript compiler
+// needs these imports for type checking and correct JSX transpilation.
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 
@@ -651,7 +651,6 @@ const App: React.FC = () => {
 };
 
 // --- Final Render ---
-// FIX: Using React 18's createRoot API, which is required by the scripts loaded in index.html.
-// The previous `ReactDOM.render` is deprecated and was causing the app to fail.
+// Using React 18's createRoot API, which is required by the scripts loaded in index.html.
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 root.render(<App />);
